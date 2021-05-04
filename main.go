@@ -1,28 +1,31 @@
 package main
 
 import (
-	"Go-Sort/pkg/BubbleSort"
-	"Go-Sort/pkg/InsertionSort"
-	"Go-Sort/pkg/SelectionSort"
+	"Go-Sort/pkg/Algorithm"
+	"Go-Sort/pkg/constants"
 
 	"fmt"
 )
 
 func main() {
-	A := []int{5, 4, 2, 3, 1}
-	B := []int{5, 4, 2, 3, 1}
-	C := []int{5, 4, 2, 3, 1}
+	test_cases := [][]int{ 
+	{5, 4, 3, 2, 1},
+	{1, 1, 1, 0, 1, 0}, 
+	{10, 40, 30, 20, 50}}
 
-
-	fmt.Printf("Unsorted -> %+v\n", A)
-	BubbleSort.Sort(A)
-	fmt.Printf("Bubble Sort -> %+v\n\n", A)
-
-	fmt.Printf("Unsorted -> %+v\n", B)
-	SelectionSort.Sort(B)
-	fmt.Printf("Selection Sort -> %+v\n\n", B)
-
-	fmt.Printf("Unsorted -> %+v\n", C)
-	InsertionSort.Sort(C)
-	fmt.Printf("Insertion Sort -> %+v\n\n", C)
+	algorithms := []string{
+		constants.Bubble_Sort, constants.Selection_Sort, constants.Insertion_Sort,
+		constants.Heap_Sort,
+	}
+	for _, sorting_alg := range algorithms {
+		fmt.Printf("\nRunning with Sorting Algorithm - %s\n", sorting_alg)
+		for i, test_case := range test_cases {
+			var A = make([]int, len(test_case))
+			copy(A, test_case)
+			fmt.Printf("(%d) Before -> %+v\n", i, A)
+			Sort := Algorithm.New(sorting_alg)
+			Sort(A)
+			fmt.Printf("(%d) After -> %+v\n", i, A)	
+		}
+	}
 }
